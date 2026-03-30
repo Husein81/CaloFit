@@ -1,16 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Workout } from './entities/workout.entity';
-import { CreateWorkoutDto } from './dto/create-workout.dto';
-import { User } from '../users/entities/user.entity';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { Repository } from "typeorm";
+import { Workout } from "./entities/workout.entity";
+import { CreateWorkoutDto } from "./dto/create-workout.dto";
+import { User } from "../users/entities/user.entity";
 
 @Injectable()
 export class WorkoutsService {
-  constructor(
-    @InjectRepository(Workout)
-    private readonly workoutsRepository: Repository<Workout>,
-  ) {}
+  constructor(private readonly workoutsRepository: Repository<Workout>) {}
 
   async findAll(user: User, date?: string): Promise<Workout[]> {
     const where: any = { user: { id: user.id } };
@@ -18,7 +14,7 @@ export class WorkoutsService {
 
     return this.workoutsRepository.find({
       where,
-      order: { createdAt: 'DESC' },
+      order: { createdAt: "DESC" },
     });
   }
 
@@ -26,7 +22,7 @@ export class WorkoutsService {
     const workout = await this.workoutsRepository.findOne({
       where: { id, user: { id: user.id } },
     });
-    if (!workout) throw new NotFoundException('Workout not found');
+    if (!workout) throw new NotFoundException("Workout not found");
     return workout;
   }
 

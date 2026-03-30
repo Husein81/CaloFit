@@ -1,0 +1,36 @@
+@import 'tailwindcss';
+@import 'uniwind';
+
+@layer theme {
+  :root {
+    /* Base colors */
+    --primary: #ff5a36;
+    --secondary: #ffe7e1;
+
+    /* Light mode */
+    --background: #ffffff;
+    --foreground: #1a1a1a;
+
+    --card: #fff5f2;
+    --card-foreground: #1a1a1a;
+
+    --muted: #ffe7e1;
+    --muted-foreground: #7a2918;
+  }
+
+  .dark {
+    /* Base colors (slightly adjusted for dark UI) */
+    --primary: #ff7a5c;
+    --secondary: #3b1f1a;
+
+    /* Dark mode */
+    --background: #121212;
+    --foreground: #f5f5f5;
+
+    --card: #1e1e1e;
+    --card-foreground: #f5f5f5;
+
+    --muted: #2a2a2a;
+    --muted-foreground: #c4c4c4;
+  }
+}

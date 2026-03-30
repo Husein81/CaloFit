@@ -1,39 +1,9 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsString, IsNumber, IsOptional, Min } from 'class-validator';
-
-export class CreateFoodItemDto {
-  @ApiProperty()
-  @IsString()
+export type CreateFoodItemDto = {
   name: string;
-
-  @ApiPropertyOptional()
-  @IsString()
-  @IsOptional()
   brand?: string;
-
-  @ApiProperty()
-  @IsNumber()
-  @Min(0)
-  calories: number;
-
-  @ApiProperty()
-  @IsNumber()
-  @Min(0)
-  proteinG: number;
-
-  @ApiProperty()
-  @IsNumber()
-  @Min(0)
-  carbsG: number;
-
-  @ApiProperty()
-  @IsNumber()
-  @Min(0)
-  fatG: number;
-
-  @ApiPropertyOptional({ default: 100 })
-  @IsNumber()
-  @Min(1)
-  @IsOptional()
-  servingSizeG?: number;
-}
+  calories: number; // min: 0
+  proteinG: number; // min: 0
+  carbsG: number; // min: 0
+  fatG: number; // min: 0
+  servingSizeG?: number; // min: 1, default: 100
+};
