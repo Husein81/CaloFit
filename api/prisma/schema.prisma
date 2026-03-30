@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum MealType {
+  BREAKFAST
+  LUNCH
+  DINNER
+  SNACK
+}
+
+enum WorkoutCategory {
+  CARDIO
+  STRENGTH
+  FLEXIBILITY
+  SPORTS
+  OTHER
+}
+
+model User {
+  id           String  @id @default(uuid())
+  name         String
+  email        String  @unique
+  password     String
+  avatarUrl    String?
+  heightCm     Float?
+  weightKg     Float?
+  goalCalories Int?    @default(2000)
+
+  mealEntries MealEntry[]
+  workouts    Workout[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model FoodItem {
+  id           String  @id @default(uuid())
+  name         String
+  brand        String?
+  calories     Float
+  proteinG     Float
+  carbsG       Float
+  fatG         Float
+  servingSizeG Float   @default(100)
+  isCustom     Boolean @default(false)
+
+  mealEntries MealEntry[]
+
+  createdAt DateTime @default(now())
+
+  @@map("food_items")
+}
+
+model MealEntry {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  foodItemId String
+  foodItem   FoodItem @relation(fields: [foodItemId], references: [id])
+
+  mealType MealType
+  servings Float
+  date     String // ISO date string (YYYY-MM-DD)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([foodItemId])
+  @@map("meal_entries")
+}
+
+model Workout {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name                String
+  date                String // ISO date string (YYYY-MM-DD)
+  durationMinutes     Int
+  totalCaloriesBurned Float  @default(0)
+
+  exercises Json // Array of WorkoutExerciseEntry objects
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@map("workouts")
+}
