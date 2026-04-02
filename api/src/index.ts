@@ -32,7 +32,7 @@ app.use("/food-items", foodItemRoutes);
 const port = process.env.PORT ?? 5000;
 
 prisma.$connect().then(() => {
-  app.listen(port, () => {
+  app.listen(Number(port), "0.0.0.0", () => {
     console.log(`Server running on port ${port}`);
   });
 });
