@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -44,15 +45,15 @@ model User {
 }
 
 model FoodItem {
-  id           String  @id @default(uuid())
-  name         String
-  brand        String?
-  calories     Float
-  proteinG     Float
-  carbsG       Float
-  fatG         Float
-  servingSizeG Float   @default(100)
-  isCustom     Boolean @default(false)
+  id                String  @id @default(uuid())
+  name              String
+  brand             String?
+  calories          Float
+  proteinPerServing Float
+  carbsPerServing   Float
+  fatPerServing     Float
+  servingSize       Float   @default(100)
+  isCustom          Boolean @default(false)
 
   mealEntries MealEntry[]
 
@@ -90,7 +91,7 @@ model Workout {
   durationMinutes     Int
   totalCaloriesBurned Float  @default(0)
 
-  exercises Json // Array of WorkoutExerciseEntry objects
+  exercises Json
 
   createdAt DateTime @default(now())
 
